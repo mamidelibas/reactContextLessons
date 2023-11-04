@@ -1,9 +1,17 @@
-import FirstComponent from "@/components/first";
-import SecondComponent from "@/components/second/second";
 import Head from "next/head";
+import { Message_data } from "@/context/context";
+import { useRouter } from "next/router";
+import { useContext } from "react";
 
 export default function Home() {
-  const messageValue = "Hello World!";
+  const { message, setMessage } = useContext(Message_data);
+
+  const router = useRouter();
+
+  function sendData() {
+    const gonderilecekMesaj = "Hello world";
+    setMessage(gonderilecekMesaj);
+  }
 
   return (
     <>
@@ -13,9 +21,18 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>My message is : {messageValue}</h1>
-      <FirstComponent message={messageValue} />
-      <SecondComponent />
+
+      <header>
+        <div style={{ marginTop: "50px" }}>
+          <button onClick={() => router.push("/share")}>
+            Second Component
+          </button>
+        </div>
+
+        <button onClick={() => sendData()} style={{ marginTop: "50px" }}>
+          Send Message
+        </button>
+      </header>
     </>
   );
 }
